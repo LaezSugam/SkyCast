@@ -4,6 +4,7 @@
 // var scores = require("../controllers/scores.js");
 
 var darksky = require("./darksky.js");
+var gmaps = require("./gmaps.js");
 
 var path = require("path")
 
@@ -20,13 +21,18 @@ module.exports = function(app){
 		users.checkUser(req, res);
 	})
 
-	app.post("/register", function(req, res){
-		console.log("register");
-		users.register(req, res);
+	app.post("/getForecast", function(req, res){
+		console.log("Getting forecast");
+		darksky.getForecast(req, res);
 	})
 
-	app.post("/login", function(req, res){
-		users.login(req, res);
+	app.post("/getAddy", function(req, res){
+		console.log("Getting Address");
+		gmaps.getAddy(req, res);
+	})
+
+	app.post("/search", function(req, res){
+		gmaps.search(req, res);
 	})
 
 	app.get("/questions", function(req, res){

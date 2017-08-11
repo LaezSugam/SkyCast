@@ -1,3 +1,14 @@
-<p>home</p>
-<p>Lat: {{ location.lat }} Long: {{ location.lng }}</p>
-<p>{{ location | json }}</p>
+<form (submit)="search()" #formData="ngForm">
+	<p><input type="text" name="search" required [(ngModel)]="searchInfo.search" #search="ngModel"><span *ngIf="searchInfo.dirty"><span *ngIf="searchInfo.errors?.required">Search field is required.</span></span></p>
+
+	<!-- <input type="submit" name="searchInfo" value="Search" [disabled]="!formData.form.valid"> -->
+</form>
+	<button type="button" name="button" (click)="search()">search</button>
+<p>{{ searchInfo | json }}</p>
+<p>{{ searchResults | json }}</p>
+<p>City: {{ city }}</p>
+<div *ngIf="weatherData.currently">
+	<p>{{ weatherData.currently.time * 1000 | date:"medium" }}</p>
+	<p>{{ weatherData.currently.temperature | number: "1.0-0" }}&deg;F</p>
+</div>
+<p>Weather: {{ weatherData | json }}</p>

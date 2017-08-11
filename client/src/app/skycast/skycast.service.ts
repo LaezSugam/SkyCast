@@ -17,4 +17,19 @@ export class SkycastService {
 			.map(data => data.json()).toPromise();
 	}
 
+	getForecast(location){
+		return this.http.post("/getForecast", location, OPTIONS)
+			.map(data => data.json()).toPromise();
+	}
+
+	getAddy(location){
+		return this.http.post("/getAddy", location, OPTIONS)
+			.map(data => data.json()).toPromise();
+	}
+
+	search(searchInfo){
+		return this.http.post("/search", searchInfo, OPTIONS)
+			.map(data => data.json()).toPromise();
+	}
+
 }
