@@ -20,15 +20,16 @@ export class ScHomeComponent implements OnInit {
 
 	ngOnInit() {
 		this.getLocation()
-		console.log("location", location)
 	}
 
-	search(){
-		console.log("click")
+	addressSearch(){
 		this.skycastService.search(this.searchInfo)
-			.then((data) => {
-				this.searchResults = data;
-			})
+		.then((data) => {
+			this.searchResults = data.results;
+			this.location = data.results[0].geometry.location
+			this.city = this.getCity(data.results);
+			this.getForecast(this.location)
+		});
 	}
 
 
@@ -36,7 +37,7 @@ export class ScHomeComponent implements OnInit {
 		this.skycastService.getLocation()
 		.then((data) => {
 			this.location = data.location;
-			console.log(data);
+			// console.log(data);
 			this.getForecast(data.location);
 			this.getAddy(data.location);
 		})
@@ -46,31 +47,41 @@ export class ScHomeComponent implements OnInit {
 		this.skycastService.getForecast(location)
 		.then((data) => {
 			this.weatherData = data;
+			console.log(data);
 		})
 	}
 
 	getAddy(location){
 		this.skycastService.getAddy(location)
 		.then((data) => {
-			console.log(data);
+			// console.log(data);
 			this.city = this.getCity(data.results);
-			// this.city = data.results[2].formatted_address;
 		})
 	}
 
 	getCity(geocodeResults){
 		var city = "";
 		var state = "";
-		for(var i = 0; i < geocodeResults.length; i++){
-			if(geocodeResults[i].types.includes("street_address")){
-				for(var j = 0; j < geocodeResults[i].address_components.length; j++){
-					if(geocodeResults[i].address_components[j].types.includes("locality")){
-						city = geocodeResults[i].address_components[j].long_name;
-					}
-					else if(geocodeResults[i].address_components[j].types.includes("administrative_area_level_1")){
-						state = geocodeResults[i].address_components[j].short_name;
-					}
-				}
+		// console.log(geocodeResults);
+		// for(var i = 0; i < geocodeResults.length; i++){
+		// 	if(geocodeResults[i].types.includes("street_address")){
+		// 		for(var j = 0; j < geocodeResults[i].address_components.length; j++){
+		// 			if(geocodeResults[i].address_components[j].types.includes("locality")){
+		// 				city = geocodeResults[i].address_components[j].long_name;
+		// 			}
+		// 			else if(geocodeResults[i].address_components[j].types.includes("administrative_area_level_1")){
+		// 				state = geocodeResults[i].address_components[j].short_name;
+		// 			}
+		// 		}
+		// 	}
+		// }
+
+		for(var j = 0; j < geocodeResults[0].address_components.length; j++){
+			if(geocodeResults[0].address_components[j].types.includes("locality")){
+				city = geocodeResults[0].address_components[j].long_name;
+			}
+			else if(geocodeResults[0].address_components[j].types.includes("administrative_area_level_1")){
+				state = geocodeResults[0].address_components[j].short_name;
 			}
 		}
 		return city + ", " + state;

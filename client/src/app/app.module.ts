@@ -13,7 +13,7 @@ import { SkycastService } from "./skycast/skycast.service";
   declarations: [
     AppComponent,
     SkycastComponent,
-    ScHomeComponent
+    ScHomeComponent,
   ],
   imports: [
     BrowserModule,
