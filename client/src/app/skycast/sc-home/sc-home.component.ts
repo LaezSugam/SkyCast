@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { SkycastService } from "./../skycast.service";
+import { CookieService } from "ngx-cookie";
 
 @Component({
 	selector: 'app-sc-home',
@@ -9,7 +10,7 @@ import { SkycastService } from "./../skycast.service";
 })
 export class ScHomeComponent implements OnInit {
 
-	constructor(private skycastService: SkycastService) { }
+	constructor(private skycastService: SkycastService, private cookieService: CookieService) { }
 
 	location = {};
 	weatherData = {};
@@ -17,6 +18,7 @@ export class ScHomeComponent implements OnInit {
 	searchInfo = {};
 	searchResults = {};
 	chartReady = false;
+	searchHistory = {};
 
 	public barChartOptions:any = {
 		scaleShowVerticalLines: false,
@@ -78,6 +80,8 @@ export class ScHomeComponent implements OnInit {
 
 	ngOnInit() {
 		this.getLocation()
+		this.initCookie();
+		console.log(this.searchHistory);
 	}
 
 	addressSearch(){
@@ -89,8 +93,34 @@ export class ScHomeComponent implements OnInit {
 			this.city = this.getCity(data.results);
 			this.getForecast(this.location)
 		});
+		this.searchHistory["searches"].push(this.searchInfo["search"]);
+		this.putCookie("search_history", this.searchHistory);
 	}
 
+	getCookie(key){
+		return this.cookieService.getObject(key);
+	}
+
+	putCookie(key, value){
+		this.cookieService.putObject(key, value);
+	}
+
+	removeCookies(){
+		this.cookieService.removeAll();
+	}
+
+	initCookie(){
+		var tCookie = this.getCookie("search_history");
+		if(tCookie){
+			this.searchHistory = tCookie;
+			console.log("Cookie Found")
+		}
+		else{
+			this.searchHistory = {"searches": []};
+			this.putCookie("search_history", this.searchHistory);
+			console.log("No cookie found, creating cookie")
+		}
+	}
 
 	getLocation(){
 		this.skycastService.getLocation()
