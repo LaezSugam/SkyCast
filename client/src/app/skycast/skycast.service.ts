@@ -35,7 +35,7 @@ export class SkycastService {
 			// console.log(data);
 			this.getForecast(data.location).then((data) => {
 				this.weatherData = data;
-				console.log(this.weatherData);
+				// console.log(this.weatherData);
 			});
 			this.getAddy(data.location).then((data) => {
 					// console.log(data);
@@ -68,6 +68,7 @@ export class SkycastService {
 			this.city = this.getCity(data.results);
 			this.getForecast(this.location).then((data) => {
 					this.weatherData = data;
+					console.log(data);
 			})
 		});
 

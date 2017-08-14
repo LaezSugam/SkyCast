@@ -1,0 +1,23 @@
+<form #formData="ngForm">
+	<p><input type="text" name="search" required [(ngModel)]="searchInfo.search" #search="ngModel"><span *ngIf="searchInfo.dirty"><span *ngIf="searchInfo.errors?.required">Search field is required.</span></span></p>
+
+	<!-- <input type="submit" name="searchInfo" value="Search" [disabled]="!formData.form.valid"> -->
+</form>
+	<button type="button" name="button" (click)="addressSearch()">search</button>
+	<button type="button" name="button" (click)="removeCookies()">remove cookies</button>
+
+<!-- <p>{{ searchInfo | json }}</p>
+<p>{{ searchResults | json }}</p> -->
+<p>City: {{ skycastService.city }}</p>
+<div *ngIf="skycastService.weatherData.currently">
+	<div *ngFor="let day of skycastService.weatherData.daily.data">
+		<hr>
+		<p>{{ getDate(day.time * 1000) }}</p>
+		<p>{{ day.summary }}</p>
+		<p> Max: {{ day.temperatureMax | number: "1.0-0" }}&deg;F | Min: {{ day.temperatureMin | number: "1.0-0" }}&deg;F</p>
+	</div>
+</div>
+
+<p>Search History: {{ skycastService.searchHistory | json }}</p>
+
+<p>Weather: {{ skycastService.weatherData | json }}</p>

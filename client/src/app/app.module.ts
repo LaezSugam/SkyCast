@@ -13,6 +13,7 @@ import { SkycastService } from "./skycast/skycast.service";
 
 import { routing } from "./app.routes";
 import { ScTomorrowComponent } from './skycast/sc-tomorrow/sc-tomorrow.component';
+import { ScNextWeekComponent } from './skycast/sc-next-week/sc-next-week.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ScTomorrowComponent } from './skycast/sc-tomorrow/sc-tomorrow.component
     SkycastComponent,
     ScHomeComponent,
     ScTomorrowComponent,
+    ScNextWeekComponent,
   ],
   imports: [
     BrowserModule,

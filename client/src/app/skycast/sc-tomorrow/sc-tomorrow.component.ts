@@ -99,15 +99,27 @@ export class ScTomorrowComponent implements OnInit {
   		this.barChartData[0].data = [];
   		this.barChartData[0].label = "Temperature";
 
-		var tomStart = 24 - ((new Date(data[0].time * 1000)).getHours())
+		var s = 0;
 
-  		for(var i = tomStart; i < tomStart + 24; i++){
+		while((new Date()).toLocaleString("en-US", {weekday:"long"}) === (new Date(data[s].time * 1000)).toLocaleString("en-US", {weekday:"long", timeZone: this.skycastService.weatherData["timezone"]})){
+			s++;
+		}
+
+		// var tomStart = 24 - ((new Date(data[0].time * 1000)).getHours())
+
+  		for(var i = s; i < s + 24; i++){
   			var date = new Date(data[i].time * 1000);
+			// console.log(date.toLocaleString("en-US", {weekday:"long", month: "long", day: "numeric", hour: "numeric", timeZone: this.skycastService.weatherData["timezone"] }))
   			// var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  			this.barChartLabels.push([date.getHours() + "", data[i].summary])
+  			this.barChartLabels.push([date.toLocaleString("en-US", {hour: "numeric", timeZone: this.skycastService.weatherData["timezone"] }), data[i].summary])
   			this.barChartData[0].data.push(Math.floor(data[i].temperature))
   		}
   		this.chartReady = true;
   	}
+
+	getDate(datetime){
+		var d = new Date(datetime);
+		return d.toLocaleString("en-US", {weekday:"long", month: "long", day: "numeric", timeZone: this.skycastService.weatherData["timezone"] });
+	}
 
   }

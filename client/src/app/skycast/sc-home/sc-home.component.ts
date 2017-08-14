@@ -142,7 +142,7 @@ export class ScHomeComponent implements OnInit {
 		for(var i = 0; i <24; i++){
 			var date = new Date(data[i].time * 1000);
 			// var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-			this.barChartLabels.push([date.getHours() + "", data[i].summary])
+			this.barChartLabels.push([date.toLocaleString("en-US", {hour: "numeric", timeZone: this.skycastService.weatherData["timezone"] }), data[i].summary]);
 			this.barChartData[0].data.push(Math.floor(data[i].temperature))
 		}
 		this.chartReady = true;
