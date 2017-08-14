@@ -5,11 +5,25 @@
 </form>
 	<button type="button" name="button" (click)="addressSearch()">search</button>
 
-<p>{{ searchInfo | json }}</p>
-<p>{{ searchResults | json }}</p>
+<!-- <p>{{ searchInfo | json }}</p>
+<p>{{ searchResults | json }}</p> -->
 <p>City: {{ city }}</p>
 <div *ngIf="weatherData.currently">
 	<p>{{ weatherData.currently.time * 1000 | date:"medium" }}</p>
 	<p>{{ weatherData.currently.temperature | number: "1.0-0" }}&deg;F</p>
 </div>
+
+<div style="overflow-x: scroll;">
+  <div *ngIf="chartReady" class="chart-container" style="display: block; width: 300vw;">
+    <canvas id="chart" style="height: 50vh;" baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+  </div>
+</div>
+
 <p>Weather: {{ weatherData | json }}</p>

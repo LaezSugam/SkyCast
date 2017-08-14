@@ -16,6 +16,64 @@ export class ScHomeComponent implements OnInit {
 	city = "";
 	searchInfo = {};
 	searchResults = {};
+	chartReady = false;
+
+	public barChartOptions:any = {
+		scaleShowVerticalLines: false,
+		responsive: true,
+		maintainAspectRatio: false,
+		tooltips: {
+			enabled: false
+		},
+		scales: {
+			yAxes: [{
+				display: false,
+				ticks: {
+					suggestedMin: 30,
+					suggestedMax: 100,
+				}
+			}],
+			xAxes: [{
+				ticks: {
+					autoSkip: false
+				}
+			}]
+		},
+		animation: {
+			onComplete: function () {
+				var ctx = this.chart.ctx;
+				ctx.textAlign = "center";
+				ctx.textBaseline = "middle";
+				var chart = this;
+				var datasets = this.config.data.datasets;
+
+				datasets.forEach(function (dataset: Array<any>, i: number) {
+					ctx.fillStyle = "#666";
+					chart.getDatasetMeta(i).data.forEach(function (p: any, j: any) {
+						ctx.fillText(datasets[i].data[j] + "°", p._model.x, p._model.y - 20);
+					});
+
+				});
+			}
+		}
+	};
+
+	public barChartLabels = [];
+	public barChartType:string = 'line';
+	public barChartLegend:boolean = true;
+
+	public barChartData:any[] = [
+		{data: [], label: ''}
+	];
+
+	// events
+	public chartClicked(e:any):void {
+		console.log(e);
+	}
+
+	public chartHovered(e:any):void {
+		console.log(e);
+	}
 
 
 	ngOnInit() {
@@ -23,6 +81,7 @@ export class ScHomeComponent implements OnInit {
 	}
 
 	addressSearch(){
+		this.chartReady = false;
 		this.skycastService.search(this.searchInfo)
 		.then((data) => {
 			this.searchResults = data.results;
@@ -47,8 +106,22 @@ export class ScHomeComponent implements OnInit {
 		this.skycastService.getForecast(location)
 		.then((data) => {
 			this.weatherData = data;
-			console.log(data);
+			// console.log(data);
+			this.barchartData(data.hourly.data);
 		})
+	}
+
+	barchartData(data){
+		this.barChartLabels = [];
+		this.barChartData[0].data = [];
+		this.barChartData[0].label = "Temperature";
+		for(var i = 0; i <24; i++){
+			var date = new Date(data[i].time * 1000);
+			// var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+			this.barChartLabels.push([date.getHours() + "", data[i].summary])
+			this.barChartData[0].data.push(Math.floor(data[i].temperature))
+		}
+		this.chartReady = true;
 	}
 
 	getAddy(location){

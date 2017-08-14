@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { SkycastComponent } from './skycast/skycast.component';
 import { ScHomeComponent } from './skycast/sc-home/sc-home.component';
+import { ChartsModule } from 'ng2-charts';
 
 import { SkycastService } from "./skycast/skycast.service";
 
@@ -18,7 +19,8 @@ import { SkycastService } from "./skycast/skycast.service";
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+	ChartsModule
   ],
   providers: [SkycastService],
   bootstrap: [AppComponent]
