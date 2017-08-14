@@ -8,10 +8,10 @@
 
 <!-- <p>{{ searchInfo | json }}</p>
 <p>{{ searchResults | json }}</p> -->
-<p>City: {{ city }}</p>
-<div *ngIf="weatherData.currently">
-	<p>{{ weatherData.currently.time * 1000 | date:"medium" }}</p>
-	<p>{{ weatherData.currently.temperature | number: "1.0-0" }}&deg;F</p>
+<p>City: {{ skycastService.city }}</p>
+<div *ngIf="skycastService.weatherData.currently" >
+	<p>{{ skycastService.weatherData.currently.time * 1000 | date:"medium" }}</p>
+	<p>{{ skycastService.weatherData.currently.temperature | number: "1.0-0" }}&deg;F</p>
 </div>
 
 <div style="overflow-x: scroll;">
@@ -27,6 +27,6 @@
   </div>
 </div>
 
-<p>Search History: {{ searchHistory | json }}</p>
+<p>Search History: {{ skycastService.searchHistory | json }}</p>
 
-<p>Weather: {{ weatherData | json }}</p>
+<p>Weather: {{ skycastService.weatherData | json }}</p>

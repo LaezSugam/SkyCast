@@ -9,9 +9,9 @@ import { AppComponent } from './app.component';
 import { SkycastComponent } from './skycast/skycast.component';
 import { ScHomeComponent } from './skycast/sc-home/sc-home.component';
 
-
-
 import { SkycastService } from "./skycast/skycast.service";
+
+import { routing } from "./app.routes";
 
 @NgModule({
   declarations: [
@@ -24,7 +24,8 @@ import { SkycastService } from "./skycast/skycast.service";
     FormsModule,
     HttpModule,
 	ChartsModule,
-	CookieModule.forRoot()
+	CookieModule.forRoot(),
+	routing
   ],
   providers: [SkycastService],
   bootstrap: [AppComponent]
