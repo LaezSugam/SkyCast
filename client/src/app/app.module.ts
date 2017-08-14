@@ -12,12 +12,14 @@ import { ScHomeComponent } from './skycast/sc-home/sc-home.component';
 import { SkycastService } from "./skycast/skycast.service";
 
 import { routing } from "./app.routes";
+import { ScTomorrowComponent } from './skycast/sc-tomorrow/sc-tomorrow.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SkycastComponent,
     ScHomeComponent,
+    ScTomorrowComponent,
   ],
   imports: [
     BrowserModule,

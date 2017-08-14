@@ -26,13 +26,16 @@ export class SkycastService {
 	}
 
 	initData(){
+		if(this.location["lat"]){
+			return;
+		}
 		this.geoLocate()
 		.then((data) => {
 			this.location = data.location;
 			// console.log(data);
 			this.getForecast(data.location).then((data) => {
 				this.weatherData = data;
-				return Promise.resolve(data);
+				console.log(this.weatherData);
 			});
 			this.getAddy(data.location).then((data) => {
 					// console.log(data);
@@ -42,11 +45,13 @@ export class SkycastService {
 	}
 
 	getForecast(location){
+		// console.log("getting forecase")
 		return this.http.post("/getForecast", location, OPTIONS)
 			.map(data => data.json()).toPromise();
 	}
 
 	getAddy(location){
+		// console.log("getting location")
 		return this.http.post("/getAddy", location, OPTIONS)
 			.map(data => data.json()).toPromise();
 	}
@@ -103,12 +108,12 @@ export class SkycastService {
 		var tCookie = this.getCookie("search_history");
 		if(tCookie){
 			this.searchHistory = tCookie;
-			console.log("Cookie Found")
+			// console.log("Cookie Found")
 		}
 		else{
 			this.searchHistory = {"searches": []};
 			this.putCookie("search_history", this.searchHistory);
-			console.log("No cookie found, creating cookie")
+			// console.log("No cookie found, creating cookie")
 		}
 	}
 

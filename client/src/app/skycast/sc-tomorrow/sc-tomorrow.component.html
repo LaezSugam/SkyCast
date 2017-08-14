@@ -10,9 +10,9 @@
 <p>{{ searchResults | json }}</p> -->
 <p>City: {{ skycastService.city }}</p>
 <div *ngIf="skycastService.weatherData.currently" >
-	<p>{{ skycastService.weatherData.currently.time * 1000 | date:"medium" }}</p>
-	<p>Current: {{ skycastService.weatherData.currently.temperature | number: "1.0-0" }}&deg;F | Max: {{ skycastService.weatherData.daily.data[0].temperatureMax | number: "1.0-0" }}&deg;F | Min: {{ skycastService.weatherData.daily.data[0].temperatureMin | number: "1.0-0" }}&deg;F</p>
-	<p> {{ skycastService.weatherData.daily.data[0].summary }}</p>
+	<p>{{ skycastService.weatherData.daily.data[1].time * 1000 | date:"fullDate" }}</p>
+	<p>Max: {{ skycastService.weatherData.daily.data[1].temperatureMax | number: "1.0-0" }}&deg;F | Min: {{ skycastService.weatherData.daily.data[1].temperatureMin | number: "1.0-0" }}&deg;F</p>
+	<p> {{ skycastService.weatherData.daily.data[1].summary }}</p>
 </div>
 
 <div style="overflow-x: scroll;">
