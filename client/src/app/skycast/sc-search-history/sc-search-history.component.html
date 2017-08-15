@@ -1,0 +1,3 @@
+<div *ngFor="let oldSearch of skycastService.searchHistory.searches">
+	<button (click)="reSearch(oldSearch)">{{ oldSearch }}</button>
+</div>

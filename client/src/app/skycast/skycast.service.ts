@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Http, Headers, RequestOptions } from "@angular/http";
 import { CookieService } from "ngx-cookie";
+import { Router } from "@angular/router";
 
 import "rxjs"
 
@@ -11,7 +12,7 @@ const OPTIONS = new RequestOptions({headers: HEADERS})
 @Injectable()
 export class SkycastService {
 
-	constructor(private http: Http, private cookieService: CookieService) { }
+	constructor(private http: Http, private cookieService: CookieService, private router: Router) { }
 
 	location = {};
 	weatherData = {};
@@ -68,10 +69,24 @@ export class SkycastService {
 			this.city = this.getCity(data.results);
 			this.getForecast(this.location).then((data) => {
 					this.weatherData = data;
-					console.log(data);
 			})
 		});
 
+	}
+
+	reSearch(searchInfo){
+		this.weatherData = {};
+		this.chartReady = false;
+		this.search(searchInfo)
+		.then((data) => {
+			this.searchResults = data.results;
+			this.location = data.results[0].geometry.location
+			this.city = this.getCity(data.results);
+			this.getForecast(this.location).then((data) => {
+					this.weatherData = data;
+					this.router.navigate(["/home"]);
+			})
+		});
 	}
 
 	search(searchInfo){
