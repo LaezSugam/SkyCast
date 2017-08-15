@@ -1,3 +1,11 @@
-<div *ngFor="let oldSearch of skycastService.searchHistory.searches">
+<!-- <div *ngFor="let oldSearch of skycastService.searchHistory.searches">
 	<button (click)="reSearch(oldSearch)">{{ oldSearch }}</button>
-</div>
+</div> -->
+<table *ngIf="skycastService.searchHistory.searches">
+	<tr>
+		<th>Search</th><th>Search Time</th><th>&nbsp;</th>
+	</tr>
+	<tr *ngFor="let oldSearch of skycastService.searchHistory.searches">
+		<td>{{ oldSearch.search }}</td><td>{{ oldSearch.time | date: "medium" }}</td><td><button (click)="reSearch(oldSearch)">Re-Search</button></td>
+	</tr>
+</table>

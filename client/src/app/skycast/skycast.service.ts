@@ -60,7 +60,8 @@ export class SkycastService {
 	addressSearch(searchInfo){
 		this.weatherData = {};
 		this.chartReady = false;
-		this.searchHistory["searches"].push(searchInfo["search"]);
+		searchInfo.time = new Date();
+		this.searchHistory["searches"].push(searchInfo);
 		this.putCookie("search_history", this.searchHistory);
 		this.search(searchInfo)
 		.then((data) => {
