@@ -21,6 +21,15 @@ export class SkycastService {
 	chartReady = false;
 	searchHistory = {};
 
+	historic = {
+		location: {},
+		weatherData: {},
+		city: "",
+		searchResults: {},
+		chartReady: false,
+		searchHistory: {},
+	}
+
 	geoLocate(){
 		return this.http.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyC_4zFejr8bkSl6bCZ_Tk3Dt69kqPHw1f8", OPTIONS)
 			.map(data => data.json()).toPromise();
@@ -33,26 +42,26 @@ export class SkycastService {
 		this.geoLocate()
 		.then((data) => {
 			this.location = data.location;
-			// console.log(data);
 			this.getForecast(data.location).then((data) => {
 				this.weatherData = data;
-				// console.log(this.weatherData);
 			});
 			this.getAddy(data.location).then((data) => {
-					// console.log(data);
 			 		this.city = this.getCity(data.results);
 			})
 		})
 	}
 
 	getForecast(location){
-		// console.log("getting forecase")
 		return this.http.post("/getForecast", location, OPTIONS)
 			.map(data => data.json()).toPromise();
 	}
 
+	getHistoricForecast(info){
+		return this.http.post("/getHistoricForecast", info, OPTIONS)
+			.map(data => data.json()).toPromise();
+	}
+
 	getAddy(location){
-		// console.log("getting location")
 		return this.http.post("/getAddy", location, OPTIONS)
 			.map(data => data.json()).toPromise();
 	}
@@ -73,6 +82,45 @@ export class SkycastService {
 			})
 		});
 
+	}
+
+	historicAddressSearch(searchInfo){
+		this.historic.weatherData = {};
+		this.historic.chartReady = false;
+		searchInfo.time = new Date();
+		this.historic.searchHistory["searches"].push(searchInfo);
+		this.putCookie("historic_search_history", this.historic.searchHistory);
+		this.search(searchInfo)
+		.then((data) => {
+			this.historic.searchResults = data.results;
+			this.historic.location = data.results[0].geometry.location
+			this.historic.city = this.getCity(data.results);
+			var searchDate = new Date(searchInfo.date);
+			
+			var sd = searchInfo.date + "T00:00:00";
+			this.getHistoricForecast({location: this.historic.location, date: sd}).then((data) => {
+					this.historic.weatherData = data;
+					console.log(data);
+			})
+		});
+	}
+
+	reSearchHistoric(searchInfo){
+		this.historic.weatherData = {};
+		this.historic.chartReady = false;
+		searchInfo.time = new Date();
+		this.search(searchInfo)
+		.then((data) => {
+			this.historic.searchResults = data.results;
+			this.historic.location = data.results[0].geometry.location
+			this.historic.city = this.getCity(data.results);
+			var sd = searchInfo.date + "T00:00:00";
+			this.getHistoricForecast({location: this.historic.location, date: sd}).then((data) => {
+					this.historic.weatherData = data;
+					this.router.navigate(["/historicsearch"]);
+					console.log(data);
+			})
+		});
 	}
 
 	reSearch(searchInfo){
@@ -123,14 +171,18 @@ export class SkycastService {
 
 	initCookie(){
 		var tCookie = this.getCookie("search_history");
+		var tHCookie = this.getCookie("historic_search_history");
 		if(tCookie){
 			this.searchHistory = tCookie;
+			this.historic.searchHistory = tHCookie;
 			// console.log("Cookie Found")
 		}
 		else{
 			this.searchHistory = {"searches": []};
+			this.historic.searchHistory = {"searches": []};
 			this.putCookie("search_history", this.searchHistory);
-			// console.log("No cookie found, creating cookie")
+			this.putCookie("historic_search_history", this.historic.searchHistory);
+			console.log("No cookie found, creating cookie")
 		}
 	}
 

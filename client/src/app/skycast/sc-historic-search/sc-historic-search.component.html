@@ -1,0 +1,33 @@
+<form #formData="ngForm">
+	<p><input type="text" name="search" required [(ngModel)]="searchInfo.search" #search="ngModel"><span *ngIf="searchInfo.dirty"><span *ngIf="searchInfo.errors?.required">Search field is required.</span></span></p>
+	<p><input type="date" name="date" required [(ngModel)]="searchInfo.date" #date="ngModel"><span *ngIf="searchInfo.dirty"><span *ngIf="searchInfo.errors?.required">Date field is required.</span></span></p>
+	<!-- <input type="submit" name="searchInfo" value="Search" [disabled]="!formData.form.valid"> -->
+</form>
+	<button type="button" name="button" (click)="addressSearch()">search</button>
+	<button type="button" name="button" (click)="removeCookies()">remove cookies</button>
+
+<!-- <p>{{ searchInfo | json }}</p>
+<p>{{ searchResults | json }}</p> -->
+<p>{{ skycastService.historic.city }}</p>
+<div *ngIf="skycastService.historic.weatherData.currently" >
+	<p>{{ getDate(skycastService.historic.weatherData.currently.time * 1000) }}</p>
+	<p>Max: {{ skycastService.historic.weatherData.daily.data[0].temperatureMax | number: "1.0-0" }}&deg;F | Min: {{ skycastService.historic.weatherData.daily.data[0].temperatureMin | number: "1.0-0" }}&deg;F</p>
+	<p> {{ skycastService.historic.weatherData.daily.data[0].summary }}</p>
+</div>
+
+<div style="overflow-x: scroll;" *ngIf="chartReady">
+  <div class="chart-container" style="display: block; width: 300vw;">
+    <canvas id="chart" style="height: 50vh;" baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+  </div>
+</div>
+
+<p>Historic Search History: {{ skycastService.historic.searchHistory | json }}</p>
+
+<p>Weather: {{ skycastService.historic.weatherData | json }}</p>

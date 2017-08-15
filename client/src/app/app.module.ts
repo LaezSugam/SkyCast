@@ -15,6 +15,7 @@ import { routing } from "./app.routes";
 import { ScTomorrowComponent } from './skycast/sc-tomorrow/sc-tomorrow.component';
 import { ScNextWeekComponent } from './skycast/sc-next-week/sc-next-week.component';
 import { ScSearchHistoryComponent } from './skycast/sc-search-history/sc-search-history.component';
+import { ScHistoricSearchComponent } from './skycast/sc-historic-search/sc-historic-search.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ScSearchHistoryComponent } from './skycast/sc-search-history/sc-search-
     ScTomorrowComponent,
     ScNextWeekComponent,
     ScSearchHistoryComponent,
+    ScHistoricSearchComponent,
   ],
   imports: [
     BrowserModule,

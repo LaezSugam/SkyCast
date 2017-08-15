@@ -23,7 +23,12 @@ export class ScSearchHistoryComponent implements OnInit {
 
 	reSearch(searchInfo){
 		console.log(searchInfo);
-		this.skycastService.reSearch(searchInfo);
+		if(searchInfo.date){
+			this.skycastService.reSearchHistoric(searchInfo);
+		}
+		else{
+			this.skycastService.reSearch(searchInfo);
+		}
 	}
 
 }

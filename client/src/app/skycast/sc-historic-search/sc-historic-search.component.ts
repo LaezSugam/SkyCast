@@ -4,11 +4,11 @@ import { SkycastService } from "./../skycast.service";
 import { CookieService } from "ngx-cookie";
 
 @Component({
-	selector: 'app-sc-home',
-	templateUrl: './sc-home.component.html',
-	styleUrls: ['./sc-home.component.css']
+	selector: 'app-sc-historic-search',
+	templateUrl: './sc-historic-search.component.html',
+	styleUrls: ['./sc-historic-search.component.css']
 })
-export class ScHomeComponent implements OnInit {
+export class ScHistoricSearchComponent implements OnInit {
 
 	constructor(private skycastService: SkycastService, private cookieService: CookieService) { }
 
@@ -79,14 +79,14 @@ export class ScHomeComponent implements OnInit {
 	}
 
 	ngDoCheck(){
-		if(this.skycastService.weatherData["hourly"] && !this.chartReady){
-			this.barchartData(this.skycastService.weatherData["hourly"].data);
+		if(this.skycastService.historic.weatherData["hourly"] && !this.chartReady){
+			this.barchartData(this.skycastService.historic.weatherData["hourly"].data);
 		}
 	}
 
 	addressSearch(){
 		this.chartReady = false;
-		this.skycastService.addressSearch(this.searchInfo);
+		this.skycastService.historicAddressSearch(this.searchInfo);
 	}
 
 	removeCookies(){
@@ -99,10 +99,15 @@ export class ScHomeComponent implements OnInit {
 		this.barChartData[0].label = "Temperature";
 		for(var i = 0; i <24; i++){
 			var date = new Date(data[i].time * 1000);
-			this.barChartLabels.push([date.toLocaleString("en-US", {hour: "numeric", timeZone: this.skycastService.weatherData["timezone"] }), data[i].summary]);
+			this.barChartLabels.push([date.toLocaleString("en-US", {hour: "numeric", timeZone: this.skycastService.historic.weatherData["timezone"] }), data[i].summary]);
 			this.barChartData[0].data.push(Math.floor(data[i].temperature))
 		}
 		this.chartReady = true;
+	}
+
+	getDate(datetime){
+		var d = new Date(datetime);
+		return d.toLocaleString("en-US", {weekday:"long", month: "long", day: "numeric", year: "numeric", timeZone: this.skycastService.historic.weatherData["timezone"] });
 	}
 
 }

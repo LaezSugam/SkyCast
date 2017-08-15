@@ -3,9 +3,24 @@
 </div> -->
 <table *ngIf="skycastService.searchHistory.searches">
 	<tr>
-		<th>Search</th><th>Search Time</th><th>&nbsp;</th>
+		<th colspan="3">Forecast Search History</th>
+	</tr>
+	<tr>
+		<th>Location</th><th>Search Time</th><th>&nbsp;</th>
 	</tr>
 	<tr *ngFor="let oldSearch of skycastService.searchHistory.searches">
 		<td>{{ oldSearch.search }}</td><td>{{ oldSearch.time | date: "medium" }}</td><td><button (click)="reSearch(oldSearch)">Re-Search</button></td>
+	</tr>
+</table>
+
+<table *ngIf="skycastService.searchHistory.searches">
+	<tr>
+		<th colspan="4">Historic Search History</th>
+	</tr>
+	<tr>
+		<th>Location</th><th>Date</th><th>Search Time</th><th>&nbsp;</th>
+	</tr>
+	<tr *ngFor="let oldSearch of skycastService.historic.searchHistory.searches">
+		<td>{{ oldSearch.search }}</td>	<td>{{ oldSearch.date | date }}</td><td>{{ oldSearch.time | date: "medium" }}</td><td><button (click)="reSearch(oldSearch)">Re-Search</button></td>
 	</tr>
 </table>
