@@ -70,7 +70,11 @@ export class SkycastService {
 		this.weatherData = {};
 		this.chartReady = false;
 		searchInfo.time = new Date();
-		this.searchHistory["searches"].push(searchInfo);
+		var savedSearch = {};
+		for(var key in searchInfo){
+			savedSearch[key] = searchInfo[key];
+		}
+		this.searchHistory["searches"].push(savedSearch);
 		this.putCookie("search_history", this.searchHistory);
 		this.search(searchInfo)
 		.then((data) => {
@@ -88,16 +92,19 @@ export class SkycastService {
 		this.historic.weatherData = {};
 		this.historic.chartReady = false;
 		searchInfo.time = new Date();
-		this.historic.searchHistory["searches"].push(searchInfo);
+		var savedSearch = {};
+		for(var key in searchInfo){
+			savedSearch[key] = searchInfo[key];
+		}
+		this.historic.searchHistory["searches"].push(savedSearch);
 		this.putCookie("historic_search_history", this.historic.searchHistory);
 		this.search(searchInfo)
 		.then((data) => {
 			this.historic.searchResults = data.results;
 			this.historic.location = data.results[0].geometry.location
 			this.historic.city = this.getCity(data.results);
-			var searchDate = new Date(searchInfo.date);
-			
-			var sd = searchInfo.date + "T00:00:00";
+			var sd = searchInfo.year + "-" + searchInfo.month + "-" + searchInfo.day + "T00:00:00";
+			console.log(sd);
 			this.getHistoricForecast({location: this.historic.location, date: sd}).then((data) => {
 					this.historic.weatherData = data;
 					console.log(data);
@@ -114,7 +121,8 @@ export class SkycastService {
 			this.historic.searchResults = data.results;
 			this.historic.location = data.results[0].geometry.location
 			this.historic.city = this.getCity(data.results);
-			var sd = searchInfo.date + "T00:00:00";
+			var sd = searchInfo.year + "-" + searchInfo.month + "-" + searchInfo.day + "T00:00:00";
+			console.log(sd);
 			this.getHistoricForecast({location: this.historic.location, date: sd}).then((data) => {
 					this.historic.weatherData = data;
 					this.router.navigate(["/historicsearch"]);

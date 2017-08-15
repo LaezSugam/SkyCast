@@ -14,6 +14,9 @@ export class ScHistoricSearchComponent implements OnInit {
 
 	chartReady = false;
 	searchInfo = {};
+	years = [];
+	months = [];
+	days = [];
 
 
 	public barChartOptions:any = {
@@ -76,6 +79,7 @@ export class ScHistoricSearchComponent implements OnInit {
 	ngOnInit() {
 		this.skycastService.initData();
 		this.skycastService.initCookie();
+		this.dateSelectors();
 	}
 
 	ngDoCheck(){
@@ -108,6 +112,30 @@ export class ScHistoricSearchComponent implements OnInit {
 	getDate(datetime){
 		var d = new Date(datetime);
 		return d.toLocaleString("en-US", {weekday:"long", month: "long", day: "numeric", year: "numeric", timeZone: this.skycastService.historic.weatherData["timezone"] });
+	}
+
+	dateSelectors(){
+		for(var i = 1; i <= 12; i++){
+			if(i < 10){
+				this.months.push("0" + i);
+			}
+			else{
+				this.months.push(i + "");
+			}
+		}
+
+		for(var i = 1; i <= 31; i++){
+			if(i < 10){
+				this.days.push("0" + i);
+			}
+			else{
+				this.days.push(i + "");
+			}
+		}
+
+		for(var i = (new Date()).getFullYear(); i >= 1000; i--){
+			this.years.push(i);
+		}
 	}
 
 }

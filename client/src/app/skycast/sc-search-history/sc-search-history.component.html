@@ -1,7 +1,7 @@
 <!-- <div *ngFor="let oldSearch of skycastService.searchHistory.searches">
 	<button (click)="reSearch(oldSearch)">{{ oldSearch }}</button>
 </div> -->
-<table *ngIf="skycastService.searchHistory.searches">
+<table *ngIf="skycastService.searchHistory.searches[0]">
 	<tr>
 		<th colspan="3">Forecast Search History</th>
 	</tr>
@@ -12,8 +12,9 @@
 		<td>{{ oldSearch.search }}</td><td>{{ oldSearch.time | date: "medium" }}</td><td><button (click)="reSearch(oldSearch)">Re-Search</button></td>
 	</tr>
 </table>
+<p *ngIf="!skycastService.searchHistory.searches[0]">Search history is empty.</p>
 
-<table *ngIf="skycastService.searchHistory.searches">
+<table *ngIf="skycastService.historic.searchHistory.searches[0]">
 	<tr>
 		<th colspan="4">Historic Search History</th>
 	</tr>
@@ -21,6 +22,7 @@
 		<th>Location</th><th>Date</th><th>Search Time</th><th>&nbsp;</th>
 	</tr>
 	<tr *ngFor="let oldSearch of skycastService.historic.searchHistory.searches">
-		<td>{{ oldSearch.search }}</td>	<td>{{ oldSearch.date | date }}</td><td>{{ oldSearch.time | date: "medium" }}</td><td><button (click)="reSearch(oldSearch)">Re-Search</button></td>
+		<td>{{ oldSearch.search }}</td>	<td>{{ oldSearch.year }}-{{ oldSearch.month }}-{{ oldSearch.day }}</td><td>{{ oldSearch.time | date: "medium" }}</td><td><button (click)="reSearch(oldSearch)">Re-Search</button></td>
 	</tr>
 </table>
+<p *ngIf="!skycastService.historic.searchHistory.searches[0]">Historic search history is empty.</p>

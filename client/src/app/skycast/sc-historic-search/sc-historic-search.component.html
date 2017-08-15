@@ -1,9 +1,24 @@
 <form #formData="ngForm">
-	<p><input type="text" name="search" required [(ngModel)]="searchInfo.search" #search="ngModel"><span *ngIf="searchInfo.dirty"><span *ngIf="searchInfo.errors?.required">Search field is required.</span></span></p>
-	<p><input type="date" name="date" required [(ngModel)]="searchInfo.date" #date="ngModel"><span *ngIf="searchInfo.dirty"><span *ngIf="searchInfo.errors?.required">Date field is required.</span></span></p>
+	<p>City/zip-code: <input type="text" name="search" required [(ngModel)]="searchInfo.search" #search="ngModel"><span *ngIf="searchInfo.dirty"><span *ngIf="searchInfo.errors?.required">Search field is required.</span></span></p>
+
+	<!-- <p><input type="date" name="date" required [(ngModel)]="searchInfo.date" #date="ngModel"><span *ngIf="searchInfo.dirty"><span *ngIf="searchInfo.errors?.required">Date field is required.</span></span></p> -->
+	<p>
+		<span *ngIf="years[0]">Year: <select name="year" [(ngModel)]="searchInfo.year">
+		<option *ngFor="let year of years">{{ year }}</option>
+		</select></span>
+
+		<span *ngIf="months[0]">Month: <select name="month" [(ngModel)]="searchInfo.month">
+		<option *ngFor="let month of months">{{ month }}</option>
+		</select></span>
+
+		<span *ngIf="days[0]">Day: <select name="day" [(ngModel)]="searchInfo.day">
+		<option *ngFor="let day of days">{{ day }}</option>
+		</select></span>
+
+	</p>
 	<!-- <input type="submit" name="searchInfo" value="Search" [disabled]="!formData.form.valid"> -->
 </form>
-	<button type="button" name="button" (click)="addressSearch()">search</button>
+	<button type="button" name="button" (click)="addressSearch()">Search</button>
 	<button type="button" name="button" (click)="removeCookies()">remove cookies</button>
 
 <!-- <p>{{ searchInfo | json }}</p>
@@ -28,6 +43,6 @@
   </div>
 </div>
 
-<p>Historic Search History: {{ skycastService.historic.searchHistory | json }}</p>
+<!-- <p>Historic Search History: {{ skycastService.historic.searchHistory | json }}</p>
 
-<p>Weather: {{ skycastService.historic.weatherData | json }}</p>
+<p>Weather: {{ skycastService.historic.weatherData | json }}</p> -->
