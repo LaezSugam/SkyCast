@@ -1,8 +1,3 @@
-// var mongoose = require('mongoose');
-// var users = require("../controllers/users.js");
-// var questions = require("../controllers/questions.js");
-// var scores = require("../controllers/scores.js");
-
 var darksky = require("./darksky.js");
 var gmaps = require("./gmaps.js");
 

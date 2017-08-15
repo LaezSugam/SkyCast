@@ -3,7 +3,6 @@
 var express = require("express");
 var path = require("path");
 var bodyParser = require("body-parser");
-var session = require("express-session");
 
 var app = express();
 
@@ -26,6 +25,4 @@ app.use(session({secret: "jetisadog", resave: false, saveUninitialized: false}))
 require("./server/config/routes.js")(app);
 
 //--------------------LISTEN-----------------
-app.listen(8000, function() {
- console.log("listening on port 8000");
-});
+var server = app.listen(process.env.PORT || 8000);
