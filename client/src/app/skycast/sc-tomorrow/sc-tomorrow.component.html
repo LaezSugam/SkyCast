@@ -1,9 +1,10 @@
+<h2>Tomorrow's Forecast</h2>
 <form #formData="ngForm">
 	<p><input type="text" name="search" required [(ngModel)]="searchInfo.search" #search="ngModel"><span *ngIf="searchInfo.dirty"><span *ngIf="searchInfo.errors?.required">Search field is required.</span></span></p>
 
 	<!-- <input type="submit" name="searchInfo" value="Search" [disabled]="!formData.form.valid"> -->
 </form>
-	<button type="button" name="button" (click)="addressSearch()">search</button>
+	<p><button type="button" name="button" (click)="addressSearch()">search</button></p>
 	<!-- <button type="button" name="button" (click)="removeCookies()">remove cookies</button> -->
 
 <!-- <p>{{ searchInfo | json }}</p>

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { ChartsModule } from 'ng2-charts';
 import { CookieModule } from "ngx-cookie";
+import { CollapseModule } from "ngx-bootstrap";
 
 import { AppComponent } from './app.component';
 import { SkycastComponent } from './skycast/skycast.component';
@@ -33,7 +34,8 @@ import { ScHistoricSearchComponent } from './skycast/sc-historic-search/sc-histo
     HttpModule,
 	ChartsModule,
 	CookieModule.forRoot(),
-	routing
+	routing,
+	CollapseModule
   ],
   providers: [SkycastService],
   bootstrap: [AppComponent]

@@ -6,7 +6,7 @@ import { CookieService } from "ngx-cookie";
 @Component({
 	selector: 'app-sc-home',
 	templateUrl: './sc-home.component.html',
-	styleUrls: ['./sc-home.component.css']
+	styleUrls: ['./sc-home.component.css', './../skycast.component.css']
 })
 export class ScHomeComponent implements OnInit {
 

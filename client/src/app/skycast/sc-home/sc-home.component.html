@@ -1,14 +1,15 @@
+<h2>Today's Forecast</h2>
 <form #formData="ngForm">
 	<p><input type="text" name="search" required [(ngModel)]="searchInfo.search" #search="ngModel"><span *ngIf="searchInfo.dirty"><span *ngIf="searchInfo.errors?.required">Search field is required.</span></span></p>
 
 	<!-- <input type="submit" name="searchInfo" value="Search" [disabled]="!formData.form.valid"> -->
 </form>
-	<button type="button" name="button" (click)="addressSearch()">search</button>
+	<p><button type="button" name="button" (click)="addressSearch()">search</button></p>
 	<!-- <button type="button" name="button" (click)="removeCookies()">remove cookies</button> -->
 
 <!-- <p>{{ searchInfo | json }}</p>
 <p>{{ searchResults | json }}</p> -->
-<p>City: {{ skycastService.city }}</p>
+<p>{{ skycastService.city }}</p>
 <div *ngIf="skycastService.weatherData.currently" >
 	<p>{{ skycastService.weatherData.currently.time * 1000 | date:"medium" }}</p>
 	<p>Current: {{ skycastService.weatherData.currently.temperature | number: "1.0-0" }}&deg;F | Max: {{ skycastService.weatherData.daily.data[0].temperatureMax | number: "1.0-0" }}&deg;F | Min: {{ skycastService.weatherData.daily.data[0].temperatureMin | number: "1.0-0" }}&deg;F</p>
@@ -16,8 +17,8 @@
 </div>
 
 <div style="overflow-x: scroll;">
-  <div *ngIf="chartReady" class="chart-container" style="display: block; width: 300vw;">
-    <canvas id="chart" style="height: 50vh;" baseChart
+  <div *ngIf="chartReady" class="chart-container">
+    <canvas id="chart" baseChart
             [datasets]="barChartData"
             [labels]="barChartLabels"
             [options]="barChartOptions"

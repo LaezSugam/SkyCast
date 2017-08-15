@@ -6,7 +6,7 @@ import { CookieService } from "ngx-cookie";
 @Component({
 	selector: 'app-sc-historic-search',
 	templateUrl: './sc-historic-search.component.html',
-	styleUrls: ['./sc-historic-search.component.css']
+	styleUrls: ['./sc-historic-search.component.css', './../skycast.component.css']
 })
 export class ScHistoricSearchComponent implements OnInit {
 

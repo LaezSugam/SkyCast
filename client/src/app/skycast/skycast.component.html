@@ -1,2 +1,31 @@
-<div class="menu"><a [routerLink]="['/home']">Today</a> | <a [routerLink]="['/tomorrow']">Tomorrow</a> | <a [routerLink]="['/nextweek']">Next Week</a> | <a [routerLink]="['/historicsearch']">Historic</a> | <a [routerLink]="['/searchhistory']">Search&nbsp;History</a></div>
-<router-outlet></router-outlet>
+<!-- <div class="menu"><a [routerLink]="['/home']">Today</a> | <a [routerLink]="['/tomorrow']">Tomorrow</a> | <a [routerLink]="['/nextweek']">Next Week</a> | <a [routerLink]="['/historicsearch']">Historic</a> | <a [routerLink]="['/searchhistory']">Search&nbsp;History</a></div>
+ -->
+
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" [routerLink]="['/home']">SkyCast</a>
+			<button type="button" class="navbar-toggle collapsed" (click)="isCollapsed = !isCollapsed">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#"></a>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse" [collapse]="!isCollapsed">
+			<ul class="nav navbar-nav">
+				<li><a (click)="isCollapsed = !isCollapsed" [routerLink]="['/home']" routerLinkActive="active">Today</a></li>
+				<li><a (click)="isCollapsed = !isCollapsed" [routerLink]="['/tomorrow']" routerLinkActive="active">Tomorrow</a></li>
+				<li><a (click)="isCollapsed = !isCollapsed" [routerLink]="['/nextweek']" routerLinkActive="active">Next Week</a></li>
+				<li><a (click)="isCollapsed = !isCollapsed" [routerLink]="['/historicsearch']" routerLinkActive="active">Historic</a></li>
+				<li><a (click)="isCollapsed = !isCollapsed" [routerLink]="['/searchhistory']" routerLinkActive="active">Search History</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="container">
+	<router-outlet></router-outlet>
+</div>

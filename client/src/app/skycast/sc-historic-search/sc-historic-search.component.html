@@ -1,3 +1,4 @@
+<h2>Historic Weather Data</h2>
 <form #formData="ngForm">
 	<p>City/zip-code: <input type="text" name="search" required [(ngModel)]="searchInfo.search" #search="ngModel"><span *ngIf="searchInfo.dirty"><span *ngIf="searchInfo.errors?.required">Search field is required.</span></span></p>
 
@@ -18,7 +19,7 @@
 	</p>
 	<!-- <input type="submit" name="searchInfo" value="Search" [disabled]="!formData.form.valid"> -->
 </form>
-	<button type="button" name="button" (click)="addressSearch()">Search</button>
+	<p><button type="button" name="button" (click)="addressSearch()">Search</button></p>
 	<!-- <button type="button" name="button" (click)="removeCookies()">remove cookies</button> -->
 
 <!-- <p>{{ searchInfo | json }}</p>
@@ -31,8 +32,8 @@
 </div>
 
 <div style="overflow-x: scroll;" *ngIf="chartReady">
-  <div class="chart-container" style="display: block; width: 300vw;">
-    <canvas id="chart" style="height: 50vh;" baseChart
+  <div class="chart-container">
+    <canvas id="chart" baseChart
             [datasets]="barChartData"
             [labels]="barChartLabels"
             [options]="barChartOptions"
