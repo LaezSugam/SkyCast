@@ -12,14 +12,6 @@ app.use(express.static(path.join(__dirname, "./client/dist")));
 
 app.use(express.static(path.join(__dirname, "./client/node_modules")));
 
-app.use(session({secret: "jetisadog", resave: false, saveUninitialized: false}))
-
-
-
-//--------------------------DB  SCHEMAS--------------------
-
-//require("./server/config/mongoose.js");
-
 // -------------------------ROUTES--------------------------
 
 require("./server/config/routes.js")(app);
