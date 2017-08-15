@@ -1,0 +1,24 @@
+#chart {
+	height: 50vh;
+}
+
+.chart-container {
+	display: block;
+	width: 120vw;
+}
+
+@media (max-width: 480px){
+
+	.chart-container {
+		width: 300vw;
+	}
+
+}
+
+@media (min-width: 481px) and (max-width: 800px){
+
+	.chart-container {
+		width: 200vw;
+	}
+
+}

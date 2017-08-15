@@ -6,7 +6,7 @@ import { CookieService } from "ngx-cookie";
 @Component({
   selector: 'app-sc-tomorrow',
   templateUrl: './sc-tomorrow.component.html',
-  styleUrls: ['./sc-tomorrow.component.css']
+  styleUrls: ['./sc-tomorrow.component.css', './../skycast.component.css']
 })
 export class ScTomorrowComponent implements OnInit {
 

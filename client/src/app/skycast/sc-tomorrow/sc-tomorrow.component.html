@@ -4,7 +4,7 @@
 	<!-- <input type="submit" name="searchInfo" value="Search" [disabled]="!formData.form.valid"> -->
 </form>
 	<button type="button" name="button" (click)="addressSearch()">search</button>
-	<button type="button" name="button" (click)="removeCookies()">remove cookies</button>
+	<!-- <button type="button" name="button" (click)="removeCookies()">remove cookies</button> -->
 
 <!-- <p>{{ searchInfo | json }}</p>
 <p>{{ searchResults | json }}</p> -->
@@ -16,8 +16,8 @@
 </div>
 
 <div style="overflow-x: scroll;">
-  <div *ngIf="chartReady" class="chart-container" style="display: block; width: 300vw;">
-    <canvas id="chart" style="height: 50vh;" baseChart
+  <div *ngIf="chartReady" class="chart-container">
+    <canvas id="chart" baseChart
             [datasets]="barChartData"
             [labels]="barChartLabels"
             [options]="barChartOptions"
