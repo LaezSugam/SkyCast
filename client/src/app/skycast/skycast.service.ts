@@ -30,11 +30,14 @@ export class SkycastService {
 		searchHistory: {},
 	}
 
+	//Calls the Google Geolocate API to get the user's location
 	geoLocate(){
 		return this.http.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyC_4zFejr8bkSl6bCZ_Tk3Dt69kqPHw1f8", OPTIONS)
 			.map(data => data.json()).toPromise();
 	}
 
+	//Checks if there is already a location stored, if there is nothing is done
+	//Otherwise we call geoLocate to get the user's current location. After the location is received we store the location and then get the forecast and address using the location we retrieved with geolocate and save that information
 	initData(){
 		if(this.location["lat"]){
 			return;
@@ -51,21 +54,26 @@ export class SkycastService {
 		})
 	}
 
+	// sends the location to the server, which calls the DarkSky API to get the forecast information. This is returned to us as JSON data which we return.
 	getForecast(location){
 		return this.http.post("/getForecast", location, OPTIONS)
 			.map(data => data.json()).toPromise();
 	}
 
+	// sends date and location information to the server, which then calls the DarkSky API to get the weather information for that date and location, which is returned as a JSON object
 	getHistoricForecast(info){
 		return this.http.post("/getHistoricForecast", info, OPTIONS)
 			.map(data => data.json()).toPromise();
 	}
 
+	//sends location formation (lat and long) to server, which calls the google geocode API and returns the address
 	getAddy(location){
 		return this.http.post("/getAddy", location, OPTIONS)
 			.map(data => data.json()).toPromise();
 	}
 
+	//takes in search info, adds it to the search history, which then is saved as a cookie
+	//then the search function is called with the info, then uses the results to get the location and forecast information
 	addressSearch(searchInfo){
 		this.weatherData = {};
 		this.chartReady = false;
@@ -88,6 +96,7 @@ export class SkycastService {
 
 	}
 
+	//does the same as address search, but also takes in a date so that weather data for a specific past date can be found
 	historicAddressSearch(searchInfo){
 		this.historic.weatherData = {};
 		this.historic.chartReady = false;
@@ -112,6 +121,7 @@ export class SkycastService {
 		});
 	}
 
+	//used to do an historic search from the user's search history, so it does not add the search to the search history. Also redirects to the history search page once the new data is retrieved, so the new chart can be displayed
 	reSearchHistoric(searchInfo){
 		this.historic.weatherData = {};
 		this.historic.chartReady = false;
@@ -131,6 +141,7 @@ export class SkycastService {
 		});
 	}
 
+	//executes a search from the search history, then redirects to the home page using the returned weather info
 	reSearch(searchInfo){
 		this.weatherData = {};
 		this.chartReady = false;
@@ -146,11 +157,13 @@ export class SkycastService {
 		});
 	}
 
+	//sends search address info to the server, which then calls the google geocoding API to get the lat and long
 	search(searchInfo){
 		return this.http.post("/search", searchInfo, OPTIONS)
 			.map(data => data.json()).toPromise();
 	}
 
+	//takes the google geocode results and formats into a more useful address
 	getCity(geocodeResults){
 		var city = "";
 		var state = "";
@@ -177,6 +190,7 @@ export class SkycastService {
 		this.cookieService.removeAll();
 	}
 
+	//checks if a cookie exists, if it does sets the search history variables to the cookie information, otherwise sets up an empty cookie
 	initCookie(){
 		var tCookie = this.getCookie("search_history");
 		var tHCookie = this.getCookie("historic_search_history");

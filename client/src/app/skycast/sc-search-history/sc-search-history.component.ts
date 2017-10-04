@@ -13,6 +13,7 @@ export class ScSearchHistoryComponent implements OnInit {
 	constructor(private skycastService: SkycastService, private cookieService: CookieService) { }
 
 	ngOnInit() {
+		//initilize our weather data and cookies
 		this.skycastService.initData();
 		this.skycastService.initCookie();
 	}
@@ -21,6 +22,7 @@ export class ScSearchHistoryComponent implements OnInit {
 		this.cookieService.removeAll();
 	}
 
+	//takes search info (added to the view by looking at the cookie) and does a new search or historic search using that information
 	reSearch(searchInfo){
 		console.log(searchInfo);
 		if(searchInfo.year){

@@ -15,7 +15,7 @@ export class ScHomeComponent implements OnInit {
 	chartReady = false;
 	searchInfo = {};
 
-
+	//------------Setting up settings for our chart library-----------
 	public barChartOptions:any = {
 		scaleShowVerticalLines: false,
 		responsive: true,
@@ -71,19 +71,22 @@ export class ScHomeComponent implements OnInit {
 	public chartHovered(e:any):void {
 		console.log(e);
 	}
-
+	//-----------------------------------------------------------------
 
 	ngOnInit() {
+		//initilize our weather data and cookies
 		this.skycastService.initData();
 		this.skycastService.initCookie();
 	}
 
 	ngDoCheck(){
+		//if we have weather data and the chart isn't ready, we call the barchartData function which prepares our bar chart variables and sets the chart status to ready
 		if(this.skycastService.weatherData["hourly"] && !this.chartReady){
 			this.barchartData(this.skycastService.weatherData["hourly"].data);
 		}
 	}
 
+	// sets the chart ready state to false and calls addressSearch from the service giving the entered search info
 	addressSearch(){
 		this.chartReady = false;
 		this.skycastService.addressSearch(this.searchInfo);
@@ -93,6 +96,7 @@ export class ScHomeComponent implements OnInit {
 		this.cookieService.removeAll();
 	}
 
+	//takes an argument of weather data and assigns it to the chart variables. It then sets chartReady to true, which will allow the chart to be drawn with the given data
 	barchartData(data){
 		this.barChartLabels = [];
 		this.barChartData[0].data = [];
