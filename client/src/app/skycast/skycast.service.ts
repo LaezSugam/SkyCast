@@ -124,6 +124,7 @@ export class SkycastService {
 			}
 			else{
 				this.message = "Not a valid city or zip code.";
+				this.router.navigate(["/home"]);
 			}
 		});
 	}
@@ -193,6 +194,7 @@ export class SkycastService {
 			}
 			else{
 				this.message = "Not a valid city or zip code.";
+				this.router.navigate(["/historicsearch"]);
 			}
 		});
 	}
