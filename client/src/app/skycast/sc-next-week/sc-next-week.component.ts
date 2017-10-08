@@ -12,7 +12,7 @@ export class ScNextWeekComponent implements OnInit {
 
 	constructor(private skycastService: SkycastService, private cookieService: CookieService) { }
 
-	searchInfo;
+	searchInfo = {};
 
 	ngOnInit() {
 		//initilize our weather data and cookies

@@ -14,21 +14,21 @@ export class SkycastService {
 
 	constructor(private http: Http, private cookieService: CookieService, private router: Router) { }
 
-	location;
-	weatherData;
+	location = {};
+	weatherData = {};
 	city = "";
-	searchResults;
+	searchResults = {};
 	chartReady = false;
-	searchHistory;
+	searchHistory = {};
 	message = "";
 
 	historic = {
-		location: ({} as any),
-		weatherData: ({} as any),
+		location: {},
+		weatherData: {},
 		city: "",
-		searchResults: ({} as any),
+		searchResults: {},
 		chartReady: false,
-		searchHistory: ({} as any),
+		searchHistory: {},
 	}
 
 	//Calls the Google Geolocate API to get the user's location

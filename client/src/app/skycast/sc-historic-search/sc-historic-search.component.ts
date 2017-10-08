@@ -13,7 +13,7 @@ export class ScHistoricSearchComponent implements OnInit {
 	constructor(private skycastService: SkycastService, private cookieService: CookieService) { }
 
 	chartReady = false;
-	searchInfo;
+	searchInfo = {};
 	years = [];
 	months = [];
 	days = [];
