@@ -9,8 +9,9 @@
 
 <!-- <p>{{ searchInfo | json }}</p>
 <p>{{ searchResults | json }}</p> -->
-<p>City: {{ skycastService.city }}</p>
+<p><strong>{{ skycastService.message }}</strong></p>
 <div *ngIf="skycastService.weatherData.currently">
+	<p>City: {{ skycastService.city }}</p>
 	<div *ngFor="let day of skycastService.weatherData.daily.data">
 		<hr>
 		<p>{{ getDate(day.time * 1000) }}</p>
