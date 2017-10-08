@@ -9,8 +9,9 @@
 
 <!-- <p>{{ searchInfo | json }}</p>
 <p>{{ searchResults | json }}</p> -->
-<p>{{ skycastService.city }}</p>
+<p><strong>{{ skycastService.message }}</strong></p>
 <div *ngIf="skycastService.weatherData.currently" >
+	<p>{{ skycastService.city }}</p>
 	<p>{{ skycastService.weatherData.currently.time * 1000 | date:"medium" }}</p>
 	<p>Current: {{ skycastService.weatherData.currently.temperature | number: "1.0-0" }}&deg;F | Max: {{ skycastService.weatherData.daily.data[0].temperatureMax | number: "1.0-0" }}&deg;F | Min: {{ skycastService.weatherData.daily.data[0].temperatureMin | number: "1.0-0" }}&deg;F</p>
 	<p> {{ skycastService.weatherData.daily.data[0].summary }}</p>
@@ -30,5 +31,4 @@
 </div>
 
 <!-- <p>Search History: {{ skycastService.searchHistory | json }}</p>
-
 <p>Weather: {{ skycastService.weatherData | json }}</p> -->

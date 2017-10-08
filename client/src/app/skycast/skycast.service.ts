@@ -77,28 +77,38 @@ export class SkycastService {
 	//then the search function is called with the info, then uses the results to get the location and forecast information
 	addressSearch(searchInfo){
 		this.weatherData = {};
+		this.message = "";
 		this.chartReady = false;
 		searchInfo.time = new Date();
 		var savedSearch = {};
 		for(var key in searchInfo){
 			savedSearch[key] = searchInfo[key];
 		}
-		this.searchHistory["searches"].push(savedSearch);
-		this.putCookie("search_history", this.searchHistory);
+
 		this.search(searchInfo)
 		.then((data) => {
-			this.searchResults = data.results;
-			this.location = data.results[0].geometry.location
-			this.city = this.getCity(data.results);
-			this.getForecast(this.location).then((data) => {
+
+			if(data.status == "OK"){
+				this.searchHistory["searches"].push(savedSearch);
+				this.putCookie("search_history", this.searchHistory);
+				this.searchResults = data.results;
+				this.location = data.results[0].geometry.location
+				this.city = this.getCity(data.results);
+				this.getForecast(this.location).then((data) => {
 					this.weatherData = data;
-			})
+				})
+			}
+			else{
+				console.log(data);
+				this.message = "Not a valid city or zip code.";
+			}
 		});
 
 	}
 
 	//does the same as address search, but also takes in a date so that weather data for a specific past date can be found
 	historicAddressSearch(searchInfo){
+		this.message = "";
 		this.historic.weatherData = {};
 		this.historic.chartReady = false;
 		searchInfo.time = new Date();
@@ -106,19 +116,31 @@ export class SkycastService {
 		for(var key in searchInfo){
 			savedSearch[key] = searchInfo[key];
 		}
-		this.historic.searchHistory["searches"].push(savedSearch);
-		this.putCookie("historic_search_history", this.historic.searchHistory);
+
 		this.search(searchInfo)
 		.then((data) => {
-			this.historic.searchResults = data.results;
-			this.historic.location = data.results[0].geometry.location
-			this.historic.city = this.getCity(data.results);
-			var sd = searchInfo.year + "-" + searchInfo.month + "-" + searchInfo.day + "T00:00:00";
-			console.log(sd);
-			this.getHistoricForecast({location: this.historic.location, date: sd}).then((data) => {
-					this.historic.weatherData = data;
+			if(data.status == "OK"){
+				this.historic.searchResults = data.results;
+				this.historic.location = data.results[0].geometry.location
+				this.historic.city = this.getCity(data.results);
+				var sd = searchInfo.year + "-" + searchInfo.month + "-" + searchInfo.day + "T00:00:00";
+				console.log(sd);
+				this.getHistoricForecast({location: this.historic.location, date: sd}).then((data) => {
+					if(data.code){
+						this.message = "Invalid date.";
+					}
+					else{
+						this.historic.searchHistory["searches"].push(savedSearch);
+						this.putCookie("historic_search_history", this.historic.searchHistory);
+						this.historic.weatherData = data;
+					}
 					console.log(data);
-			})
+				})
+			}
+			else{
+				console.log(data);
+				this.message = "Not a valid city or zip code.";
+			}
 		});
 	}
 
