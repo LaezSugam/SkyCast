@@ -13,6 +13,8 @@ export class SkycastComponent implements OnInit {
 
   constructor() { }
 
+  isCollapsed;
+
   ngOnInit() {
   }
 

@@ -13,7 +13,7 @@ export class ScHomeComponent implements OnInit {
 	constructor(private skycastService: SkycastService, private cookieService: CookieService) { }
 
 	chartReady = false;
-	searchInfo = {};
+	searchInfo;
 
 	//------------Setting up settings for our chart library-----------
 	public barChartOptions:any = {
