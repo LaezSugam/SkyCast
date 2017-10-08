@@ -24,9 +24,8 @@
 
 <!-- <p>{{ searchInfo | json }}</p>
 <p>{{ searchResults | json }}</p> -->
-<p><strong>{{ skycastService.message }}</strong></p>
+<p>{{ skycastService.historic.city }}</p>
 <div *ngIf="skycastService.historic.weatherData.currently" >
-	<p>{{ skycastService.historic.city }}</p>
 	<p>{{ getDate(skycastService.historic.weatherData.currently.time * 1000) }}</p>
 	<p>Max: {{ skycastService.historic.weatherData.daily.data[0].temperatureMax | number: "1.0-0" }}&deg;F | Min: {{ skycastService.historic.weatherData.daily.data[0].temperatureMin | number: "1.0-0" }}&deg;F</p>
 	<p> {{ skycastService.historic.weatherData.daily.data[0].summary }}</p>
