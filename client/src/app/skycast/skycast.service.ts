@@ -106,6 +106,28 @@ export class SkycastService {
 
 	}
 
+	//executes a search from the search history, then redirects to the home page using the returned weather info
+	reSearch(searchInfo){
+		this.weatherData = {};
+		this.chartReady = false;
+		this.message = "";
+		this.search(searchInfo)
+		.then((data) => {
+			if(data.status == "OK"){
+				this.searchResults = data.results;
+				this.location = data.results[0].geometry.location
+				this.city = this.getCity(data.results);
+				this.getForecast(this.location).then((data) => {
+					this.weatherData = data;
+					this.router.navigate(["/home"]);
+				})
+			}
+			else{
+				this.message = "Not a valid city or zip code.";
+			}
+		});
+	}
+
 	//does the same as address search, but also takes in a date so that weather data for a specific past date can be found
 	historicAddressSearch(searchInfo){
 		this.message = "";
@@ -146,39 +168,36 @@ export class SkycastService {
 
 	//used to do an historic search from the user's search history, so it does not add the search to the search history. Also redirects to the history search page once the new data is retrieved, so the new chart can be displayed
 	reSearchHistoric(searchInfo){
+		this.message = "";
 		this.historic.weatherData = {};
 		this.historic.chartReady = false;
 		searchInfo.time = new Date();
 		this.search(searchInfo)
 		.then((data) => {
-			this.historic.searchResults = data.results;
-			this.historic.location = data.results[0].geometry.location
-			this.historic.city = this.getCity(data.results);
-			var sd = searchInfo.year + "-" + searchInfo.month + "-" + searchInfo.day + "T00:00:00";
-			console.log(sd);
-			this.getHistoricForecast({location: this.historic.location, date: sd}).then((data) => {
-					this.historic.weatherData = data;
+			if(data.status == "OK"){
+				this.historic.searchResults = data.results;
+				this.historic.location = data.results[0].geometry.location
+				this.historic.city = this.getCity(data.results);
+				var sd = searchInfo.year + "-" + searchInfo.month + "-" + searchInfo.day + "T00:00:00";
+				console.log(sd);
+				this.getHistoricForecast({location: this.historic.location, date: sd}).then((data) => {
+					if(data.code){
+						this.message = "Invalid date.";
+					}
+					else{
+						this.historic.weatherData = data;
+					}
 					this.router.navigate(["/historicsearch"]);
 					console.log(data);
-			})
+				})
+			}
+			else{
+				this.message = "Not a valid city or zip code.";
+			}
 		});
 	}
 
-	//executes a search from the search history, then redirects to the home page using the returned weather info
-	reSearch(searchInfo){
-		this.weatherData = {};
-		this.chartReady = false;
-		this.search(searchInfo)
-		.then((data) => {
-			this.searchResults = data.results;
-			this.location = data.results[0].geometry.location
-			this.city = this.getCity(data.results);
-			this.getForecast(this.location).then((data) => {
-					this.weatherData = data;
-					this.router.navigate(["/home"]);
-			})
-		});
-	}
+
 
 	//sends search address info to the server, which then calls the google geocoding API to get the lat and long
 	search(searchInfo){
