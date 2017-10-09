@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
 	"build": "ng build --aot -prod",
-	"postinstall": "ng build --aot -prod"
+	"postinstall": "cd client && npm install"
   },
   "keywords": [],
   "author": "",
