@@ -18,7 +18,7 @@ export class ScHistoricSearchComponent implements OnInit {
 	months = [];
 	days = [];
 
-
+	//------------Setting up settings for our chart library-----------
 	public barChartOptions:any = {
 		scaleShowVerticalLines: false,
 		responsive: true,
@@ -75,19 +75,23 @@ export class ScHistoricSearchComponent implements OnInit {
 		console.log(e);
 	}
 
+	//--------------------------------------------------------------------------
 
 	ngOnInit() {
+		//initilize our weather data, cookie, and fill in our date dropdowns on component load
 		this.skycastService.initData();
 		this.skycastService.initCookie();
 		this.dateSelectors();
 	}
 
 	ngDoCheck(){
+		//if we have weather data and the chart isn't ready, we call the barchartData function which prepares our bar chart variables and sets the chart status to ready
 		if(this.skycastService.historic.weatherData["hourly"] && !this.chartReady){
 			this.barchartData(this.skycastService.historic.weatherData["hourly"].data);
 		}
 	}
 
+	// sets the chart ready state to false and calls historicAddressSearch from the service giving the entered search info
 	addressSearch(){
 		this.chartReady = false;
 		this.skycastService.historicAddressSearch(this.searchInfo);
@@ -97,6 +101,7 @@ export class ScHistoricSearchComponent implements OnInit {
 		this.cookieService.removeAll();
 	}
 
+	//takes an argument of weather data and assigns it to the chart variables. It then sets chartReady to true, which will allow the chart to be drawn with the given data
 	barchartData(data){
 		this.barChartLabels = [];
 		this.barChartData[0].data = [];
@@ -109,11 +114,13 @@ export class ScHistoricSearchComponent implements OnInit {
 		this.chartReady = true;
 	}
 
+	// takes a datetime argument, creates a JS Date object, returns a formatted string of that date
 	getDate(datetime){
 		var d = new Date(datetime);
 		return d.toLocaleString("en-US", {weekday:"long", month: "long", day: "numeric", year: "numeric", timeZone: this.skycastService.historic.weatherData["timezone"] });
 	}
 
+	//creates the arrays for the date dropdowns
 	dateSelectors(){
 		for(var i = 1; i <= 12; i++){
 			if(i < 10){
