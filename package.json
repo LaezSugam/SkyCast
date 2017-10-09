@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-	"build": "ng build --aot -prod",
-	"postinstall": "ng build --aot -prod"
+	"build": "ng build --aot -prod"
   },
   "keywords": [],
   "author": "",
